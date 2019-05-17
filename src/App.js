@@ -1,32 +1,26 @@
-import { BrowserRouter, Route } from 'react-router-dom'
+import React, { Fragment } from 'react'
+import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom'
+import queryString from 'query-string'
+import './App.css'
 
-const Productos = (props) => {
-  return (
-    <h2>productos</h2>
-  )
-}
+const Productos = ({ location }) => {
+  // const query = new URLSearchParams(location.search)
+  // const color = query.get('color')
+  // const talla = query.get('talla')
 
-const ProductosCategoria = ({ match }) => {
-  console.log(match)
+  const query = queryString.parse(location.search)
+  console.log(query)
   return (
-    <h3>
-      Ordenar por: { match.params.precio } precio <br />
-      Producto ID: { match.params.id }
-    </h3>
+    <h2>Color: { query.color } - Talla: { query.talla }</h2>
   )
 }
 
 const App = () => (
   <BrowserRouter>
     <>
-      <Route path='/productos' render={Productos} />
-      <Route
-        path='/productos/:precio(mayor|menor)/:id(\d{3}-\d{2})?'
-        render={ProductosCategoria}
-      />
+      <Route path='/productos' exact render={Productos} />
     </>
   </BrowserRouter>
 )
 
 export default App
-
