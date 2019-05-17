@@ -5,9 +5,12 @@ const Hola = () => (
   <h2>Hola</h2>
 )
 
-const Productos = () => (
-  <h2>productos</h2>
-)
+const Productos = (props) => {
+  debugger
+  return (
+    <h2>productos</h2>
+  )
+}
 
 const Home = () => (
   <h2>Home</h2>
