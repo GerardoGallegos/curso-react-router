@@ -1,32 +1,51 @@
-import React from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Link } from 'react-router-dom'
 
 const Hola = () => (
-  <h1>Hola</h1>
+  <h2>Hola</h2>
 )
 
 const Productos = () => (
-  <h1>Productos</h1>
+  <h2>productos</h2>
 )
 
-const Home = () => (
-  <h1>Productos</h1>
-)
+const Home = (props) => {
+  console.log(props)
+  return (
+    <h2>Home {props.location.state && props.location.state.message}</h2>
+  )
+}
 
-const HolaNinja = () => (
-  <h1>Hola Ninja</h1>
+const navStyles = {
+  color: '#FFF',
+  display: 'flex',
+  justifyContent: 'space-around'
+}
+
+const Navegation = () => (
+  <nav style={navStyles}>
+    <Link to={{
+      pathname: '/',
+      search: '?ordenar=nombre',
+      hash: '#hash',
+      state: {
+        message: 'Soy Ninja PRO',
+        cantidad: 555
+      }
+    }}>Home</Link> 
+    <Link to='/hola'>Hola</Link> 
+    <Link to='/productos'>Productos</Link> 
+  </nav>
 )
 
 const App = () => (
   <BrowserRouter>
-     <>
-       <Route path='/' exact component={Home} />
-       <Route path='/hola' component={Hola} />
-       <Route path='/hola/ninja' exact component={HolaNinja} />
-       <Route path='/productos' component={Productos} />
-     </>
+    <>
+      <Navegation />
+      <Route path='/' exact component={Home} />
+      <Route path='/hola/' render={Hola} />
+      <Route path='/productos' render={Productos} />
+    </>
   </BrowserRouter>
 )
 
 export default App
-
