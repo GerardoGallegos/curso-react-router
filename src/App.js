@@ -10,23 +10,22 @@ const Productos = () => (
 )
 
 const Home = () => (
-  <h1>Productos</h1>
-)
-
-const HolaNinja = () => (
-  <h1>Hola Ninja</h1>
+  <h1>Home</h1>
 )
 
 const App = () => (
   <BrowserRouter>
      <>
        <Route path='/' exact component={Home} />
-       <Route path='/hola' component={Hola} />
-       <Route path='/hola/ninja' exact component={HolaNinja} />
-       <Route path='/productos' component={Productos} />
+       <Route path='/hola' render={Hola} />
+       <Route path='/productos'>
+         {({ match }) => {
+           if (!match) return null
+           return <Productos />
+         }}
+       </Route >
      </>
   </BrowserRouter>
 )
 
 export default App
-
