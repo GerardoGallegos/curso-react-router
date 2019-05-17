@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Route, NavLink } from 'react-router-dom'
+import './App.css'
 
 const Hola = () => (
   <h2>Hola</h2>
@@ -8,12 +9,9 @@ const Productos = () => (
   <h2>productos</h2>
 )
 
-const Home = (props) => {
-  console.log(props)
-  return (
-    <h2>Home {props.location.state && props.location.state.message}</h2>
-  )
-}
+const Home = () => (
+  <h2>Home</h2>
+)
 
 const navStyles = {
   color: '#FFF',
@@ -21,19 +19,38 @@ const navStyles = {
   justifyContent: 'space-around'
 }
 
+const navActive = {
+  color: 'orangered'
+}
+
 const Navegation = () => (
   <nav style={navStyles}>
-    <Link to={{
-      pathname: '/',
-      search: '?ordenar=nombre',
-      hash: '#hash',
-      state: {
-        message: 'Soy Ninja PRO',
-        cantidad: 555
-      }
-    }}>Home</Link> 
-    <Link to='/hola'>Hola</Link> 
-    <Link to='/productos'>Productos</Link> 
+    <NavLink
+      to='/'
+      exact
+      activeStyle={navActive}
+    >
+      Home
+    </NavLink>
+  
+    <NavLink
+      to='/hola'
+      activeClassName='activa'
+    >
+      Hola
+    </NavLink>
+  
+    <NavLink
+      to='/productos'
+      activeStyle={navActive}
+      isActive={(match, location) => {
+        console.log(match)
+        if (!match) return false
+        return !match.isExact
+      }}
+    >
+      Productos
+    </NavLink>
   </nav>
 )
 
@@ -49,3 +66,4 @@ const App = () => (
 )
 
 export default App
+
