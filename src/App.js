@@ -1,25 +1,32 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 const Home = () => (
-  <h2>Pagina Principal</h2>
+  <h2>Home</h2>
 )
 
 const Videos = () => (
   <h2>Videos</h2>
 )
 
-const Playlist = () => (
-  <h2>Playlist</h2>
+const GeneroMusical = ({ match }) => (
+  <h2>Genero: { match.params.genero }</h2>
+)
+
+const Error404 = () => (
+  <h2>Error pagina no encontada!</h2>
 )
 
 const App = () => (
   <BrowserRouter>
-    <Switch>
-      <Route path='/' exact render={Home} />
-      <Route path='/videos' render={Playlist} />
-      <Route path='/videos' render={Videos} />
-    </Switch>
+    <>
+      <Switch>
+        <Route path='/' exact render={Home} />
+        <Route path='/videos' render={Videos} />
+        <Route path='/:genero' exact render={GeneroMusical} />
+        <Route render={Error404} />
+      </Switch>
+    </>
   </BrowserRouter>
 )
 
