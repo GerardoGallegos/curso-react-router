@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { BrowserRouter, Route, NavLink, Prompt } from 'react-router-dom'
+import React from 'react'
+import { BrowserRouter, Route, NavLink } from 'react-router-dom'
 import './App.css'
 
 const Navegation = () => (
   <nav>
     <NavLink to='/' exact activeClassName='activa'>Home</NavLink>
     <NavLink to='/ninja' activeClassName='activa'>Ninja</NavLink>
-    <NavLink to='/contacto' activeClassName='activa'>Contacto</NavLink>
+    <NavLink to='/videos' activeClassName='activa'>Videos</NavLink>
   </nav>
 )
 
@@ -18,41 +18,33 @@ const Ninja = () => (
   <h2>Ninja</h2>
 )
 
-class Contacto extends Component {
-  state = {
-    text: ''
-  }
+const Videos = () => (
+  <h2>Videos</h2>
+)
 
-  handleInput = (e) => this.setState({
-    text: e.target.value
-  })
-
-  render () {
-    return (
-      <form>
-        <input
-          name='nombre'
-          onChange={this.handleInput}
-          value={this.state.text}
-        />
-        <input type='submit' />
-        <h3>{ this.state.text }</h3>
-        <Prompt
-          when={this.state.text.length}
-          message={(location) => `Seguro que quieres ir a ${location.pathname}?`}
-        />
-      </form>
-    )
-  }
+const NavegacionImperativa = ({ history }) => {
+  console.log(history)
+  return (
+    <div>
+      <p>Navegacion imperativa</p>
+      <button onClick={history.goBack}>Atras</button>
+      <button onClick={history.goForward}>Adelante</button>
+      <button onClick={() => history.go(-2)}>2</button>
+      <button onClick={() => history.push('/ninja')}>Ir a Ninja</button>
+      <button onClick={() => history.replace('/ninja')}>Remplazar con Ninja</button>
+      <hr/>
+    </div>
+  )
 }
 
 const App = () => (
   <BrowserRouter>
     <>
       <Navegation />
+      <Route render={NavegacionImperativa} />
       <Route path='/' exact render={Home} />
       <Route path='/ninja' render={Ninja} />
-      <Route path='/contacto' component={Contacto} />
+      <Route path='/videos' render={Videos} />
     </>
   </BrowserRouter>
 )
