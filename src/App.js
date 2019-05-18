@@ -1,22 +1,6 @@
 import React from 'react'
-import { BrowserRouter, Route, NavLink, withRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import './App.css'
-
-const Navegation = withRouter((props) => {
-  console.log(props)
-  return (
-    <nav>
-      <NavLink to='/' exact activeClassName='activa'>Home</NavLink>
-      <NavLink to='/ninja' activeClassName='activa'>Ninja</NavLink>
-      <NavLink to='/videos' activeClassName='activa'>Videos</NavLink>
-      <button
-        onClick={props.history.goBack}
-      >
-        Back
-      </button>
-    </nav>
-  )
-})
 
 const Home = () => (
   <section>
@@ -24,27 +8,21 @@ const Home = () => (
   </section>
 )
 
-const Ninja =  () => (
+const User =  () => (
   <section>
-    <h1>Ninja</h1>
+    <h1>Ruta de perfil de usuario 👱🏽</h1>
   </section>
 )
-
-const Videos = () => (
-  <section>
-    <h1>Videos</h1>
-  </section>
-)
-
 
 const App = () => (
   <BrowserRouter>
-    <>
-      <Navegation />
+    <Switch>
       <Route path='/' exact render={Home} />
-      <Route path='/ninja' component={Ninja} />
-      <Route path='/videos' render={Videos} />
-    </>
+      <Route
+        path={[ '/usuarios/:id', '/perfil/:id' ]}
+        render={User}
+      />
+    </Switch>
   </BrowserRouter>
 )
 
