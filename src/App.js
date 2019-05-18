@@ -1,40 +1,37 @@
 import React from 'react'
-import { BrowserRouter, Route, NavLink, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, NavLink } from 'react-router-dom'
 import './App.css'
-
-const Home = (props) => (
-  <h2>Home</h2>
-)
-
-const Login = ({ location }) => {
-  if (location.state) {
-    return <h2>{ location.state.message } </h2>
-  }
-
-  return (
-    <h2>Login</h2>
-  )
-}
-
-const isAuth = true
-
-const Perfil = () => {
-  return isAuth
-    ? <h2>Bienvenido a tu Perfil</h2>
-    : <Redirect to={{
-      pathname: '/login',
-      state: {
-        message: 'Debes de hacer login para acceder a tu perfil'
-      }
-    }} />
-}
 
 const Navegation = () => (
   <nav>
     <NavLink to='/' exact activeClassName='activa'>Home</NavLink>
-    <NavLink to='/perfil' activeClassName='activa'>Perfil</NavLink>
-    <NavLink to='/login' activeClassName='activa'>Login</NavLink>
+    <NavLink to='/registro' activeClassName='activa'>Registro</NavLink>
+    <NavLink to='/dashboard' activeClassName='activa'>Dashboard</NavLink>
   </nav>
+)
+
+const Home = () => (
+  <h2>Home</h2>
+)
+
+const Registro = () => (
+  <h2>Registro</h2>
+)
+
+const OpcionDashboard = ({ match }) => (
+  <h2>Opcion: { match.params.opcion }</h2>
+)
+
+const Dashboard = () => (
+  <div>
+    <nav>
+      <NavLink to='/dashboard/sucursales' activeClassName='activa'>Sucursales</NavLink>
+      <NavLink to='/dashboard/empleados' activeClassName='activa'>Empleados</NavLink>
+      <NavLink to='/dashboard/huespedes' activeClassName='activa'>Huespedes</NavLink>
+    </nav>
+    <h2>Dashboard</h2>
+    <Route path='/dashboard/:opcion' render={OpcionDashboard} />
+  </div>
 )
 
 const App = () => (
@@ -42,10 +39,11 @@ const App = () => (
     <>
       <Navegation />
       <Route path='/' exact render={Home} />
-      <Route path='/perfil' render={Perfil} />
-      <Route path='/login' render={Login} />
+      <Route path='/registro' exact component={Registro} />
+      <Route path='/dashboard' component={Dashboard} />
     </>
   </BrowserRouter>
 )
+
 
 export default App
