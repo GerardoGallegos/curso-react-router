@@ -1,12 +1,12 @@
-import React from 'react'
-import { BrowserRouter, Route, NavLink } from 'react-router-dom'
+import React, { Component } from 'react'
+import { BrowserRouter, Route, NavLink, Prompt } from 'react-router-dom'
 import './App.css'
 
 const Navegation = () => (
   <nav>
     <NavLink to='/' exact activeClassName='activa'>Home</NavLink>
-    <NavLink to='/registro' activeClassName='activa'>Registro</NavLink>
-    <NavLink to='/dashboard' activeClassName='activa'>Dashboard</NavLink>
+    <NavLink to='/ninja' activeClassName='activa'>Ninja</NavLink>
+    <NavLink to='/contacto' activeClassName='activa'>Contacto</NavLink>
   </nav>
 )
 
@@ -14,36 +14,47 @@ const Home = () => (
   <h2>Home</h2>
 )
 
-const Registro = () => (
-  <h2>Registro</h2>
+const Ninja = () => (
+  <h2>Ninja</h2>
 )
 
-const OpcionDashboard = ({ match }) => (
-  <h2>Opcion: { match.params.opcion }</h2>
-)
+class Contacto extends Component {
+  state = {
+    text: ''
+  }
 
-const Dashboard = () => (
-  <div>
-    <nav>
-      <NavLink to='/dashboard/sucursales' activeClassName='activa'>Sucursales</NavLink>
-      <NavLink to='/dashboard/empleados' activeClassName='activa'>Empleados</NavLink>
-      <NavLink to='/dashboard/huespedes' activeClassName='activa'>Huespedes</NavLink>
-    </nav>
-    <h2>Dashboard</h2>
-    <Route path='/dashboard/:opcion' render={OpcionDashboard} />
-  </div>
-)
+  handleInput = (e) => this.setState({
+    text: e.target.value
+  })
+
+  render () {
+    return (
+      <form>
+        <input
+          name='nombre'
+          onChange={this.handleInput}
+          value={this.state.text}
+        />
+        <input type='submit' />
+        <h3>{ this.state.text }</h3>
+        <Prompt
+          when={this.state.text.length}
+          message={(location) => `Seguro que quieres ir a ${location.pathname}?`}
+        />
+      </form>
+    )
+  }
+}
 
 const App = () => (
   <BrowserRouter>
     <>
       <Navegation />
       <Route path='/' exact render={Home} />
-      <Route path='/registro' exact component={Registro} />
-      <Route path='/dashboard' component={Dashboard} />
+      <Route path='/ninja' render={Ninja} />
+      <Route path='/contacto' component={Contacto} />
     </>
   </BrowserRouter>
 )
-
 
 export default App
